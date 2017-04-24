@@ -1,0 +1,9 @@
+within Scatter() object, if you are in plotting mode, or figure() object, if you are in plotting mode.
+
+tools=''
+logo=''
+
+would remove the toolbox and the bokeh logo
+
+tools='pan,resize'...
+to add the tools you want

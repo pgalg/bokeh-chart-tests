@@ -1,0 +1,12 @@
+bokeh automatically refers to css and js file on a remote server (pydata.org)
+(js = interactions between objects, css = styling)
+
+It is also possible to store these on your own server
+this can be done by specifying the attribute mode in output_file.
+
+mode='relative' --> the css and js file is stored in the bokeh directory (within python)
+mode='absolute'--> same thing but with an absolute path (C:\...)
+mode='inline' --> the whole js is loaded in the html output file
+mode='cdn' is the standard format
+
+output_file("bokeh_plot.html", mode="cdn"
