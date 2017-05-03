@@ -1,7 +1,9 @@
+# makes standalone html
+
 
 import pandas as pd
 from bokeh.io import show
-from bokeh.layouts import widgetbox, row
+from bokeh.layouts import widgetbox, column
 from bokeh.models.widgets import RadioGroup
 from bokeh.models import CustomJS ,ColumnDataSource
 from bokeh.plotting import figure, output_file
@@ -32,7 +34,15 @@ improved1 = ColumnDataSource(s1)
 improved2 = ColumnDataSource(s2)
 improved3 = ColumnDataSource(s3)
 
-plot = figure(plot_width=600, plot_height=400, x_range=["Normal rose","Improved rose"], y_range=(0, 20), title="Price of a Kenyan rose", tools="", logo="grey")
+#plots
+plot = figure(
+    plot_height=400,
+    plot_width=600,
+    x_range=["Normal rose","Improved rose"],
+    y_range=(0, 20),
+    title="Price of a Kenyan rose",
+    tools="",
+    logo="grey")
 
 bluenormalbar= plot.vbar(
     x="Scenario",
@@ -78,7 +88,7 @@ greennormalbar= plot.vbar(
     top="Water cost top",
     bottom="Social cost top",
     color="SeaGreen",
-    legend="Market price",
+    legend="Water cost",
     visible=True,
     source=normal
     )
@@ -88,7 +98,7 @@ greenimprovedbar= plot.vbar(
     top="Water cost top",
     bottom="Social cost top",
     color="SeaGreen",
-    legend="Market price",
+    legend="Water cost",
     visible=True,
     source=normal1
     )
@@ -111,8 +121,11 @@ callback = CustomJS(args=(dict(improved=blueimprovedbar, s1=improved1, s2=improv
 widgets = RadioGroup(
     labels=["Water saving", "Living wage","Water saving + Living wage"], 
     callback=callback,
-    active=0
+    active=0,
+    width=600
 )
+
+layout=(column(plot,widgetbox(widgets), sizing_mode="scale_width"))
 
 plot.title.text_font = "Bitter"
 plot.legend.label_text_font = 'open sans'
@@ -122,7 +135,7 @@ plot.axis.major_label_text_font = 'open sans'
 
 output_file("widgets.html")
 
-layout=(row(widgetbox(widgets),plot))
 show(layout)
+
 
 
